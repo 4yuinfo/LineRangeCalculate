@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <meta name="author" content="Saint Huang">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+</head>
+<body>
+<h2 class="ui header">智慧寵爆塔計算機</h2>
+<table class="ui definition table">
+  	<thead>
+    	<tr>
+			<th></th>
+    		<th>物理攻擊(%)</th>
+    		<th>物理攻擊(+)</th>
+			<th>爆擊機率</th>
+			<th>爆擊傷害</th>
+  		</tr>
+	</thead>
+  	<tbody>
+    	<tr>
+      	  	<td>武器</td>
+      		<td>
+				<div class="ui input">
+				  <input id="a1" placeholder="物理攻擊(%)" type="text">
+				</div>
+      		</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="a2" placeholder="物理攻擊(+)" type="text">
+				</div>
+			</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="a3" placeholder="爆擊機率(%)" type="text">
+				</div>
+			</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="a4" placeholder="爆擊傷害(%)" type="text">
+				</div>
+			</td>
+    	</tr>
+    	<tr>
+      	  	<td>防具</td>
+      		<td>
+				<div class="ui input">
+				  <input id="b1" placeholder="物理攻擊(%)" type="text">
+				</div>
+      		</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="b2" placeholder="物理攻擊(+)" type="text">
+				</div>
+			</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="b3" placeholder="爆擊機率(%)" type="text">
+				</div>
+			</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="b4" placeholder="爆擊傷害(%)" type="text">
+				</div>
+			</td>
+    	</tr>
+    	<tr>
+      	  	<td>飾品</td>
+      		<td>
+				<div class="ui input">
+				  <input id="c1" placeholder="物理攻擊(%)" type="text">
+				</div>
+      		</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="c2" placeholder="物理攻擊(+)" type="text">
+				</div>
+			</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="c3" placeholder="爆擊機率(%)" type="text">
+				</div>
+			</td>
+      	  	<td>
+				<div class="ui input">
+				  <input id="c4" placeholder="爆擊傷害(%)" type="text">
+				</div>
+			</td>
+    	</tr>
+		<tr>
+			<td>寵物基本物攻</td>
+			<td colspan="4">
+				<div class="ui input">
+				  <input id="d1" placeholder="寵物基本物攻" type="text">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>預估寵物攻擊倍增</td>
+			<td colspan="4">
+				<div class="ui input">
+				  <input id="e1" placeholder="預估寵物攻擊倍增" type="text">
+				</div><br/>
+				範例：<br/>
+				美人魚3倍 = 3<br/>
+				美人魚3倍、白胖1.5倍 = 4.5<br/>
+				美人魚3倍、白胖1.5倍、弓饅2倍 = 6.5
+			</td>
+		</tr>
+	</tbody>
+	<tfoot class="full-width">
+		<tr>
+			<td colspan="5">
+				<div id="submitCal" class="ui primary button">計算</div>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+
+
+
+<table class="ui definition table">
+  	<tbody>
+    	<tr>
+      	  	<td id="showMsg"></td>
+    	</tr>
+	</tbody>
+</table>
+
+
+</body>
+</html>
+
+<script>
+<!--
+$('#submitCal').click(function() {
+	var runCal = true;
+	var a1 = 0;
+	var a2 = 0;
+	var a3 = 0;
+	var a4 = 0;
+	var b1 = 0;
+	var b2 = 0;
+	var b3 = 0;
+	var b4 = 0;
+	var c1 = 0;
+	var c2 = 0;
+	var c3 = 0;
+	var c4 = 0;
+	var d1 = 0;
+	
+	if ( runCal ==true && $('#a1').val().trim().length > 0 && $.isNumeric($('#a1').val()) == false ) {
+		runCal = false;
+		alert('武器 - 物理攻擊(%) -> 填寫錯誤.');
+	} else {
+		if ($('#a1').val().trim().length > 0) {
+			a1 = parseInt($('#a1').val());
+		}
+	}
+	if ( runCal ==true &&  $('#a2').val().trim().length > 0 && $.isNumeric($('#a2').val()) == false ) {
+		runCal = false;
+		alert('武器 - 物理攻擊(+) -> 填寫錯誤.');
+	} else {
+		if ($('#a2').val().trim().length > 0) {
+			a2 = parseInt($('#a2').val());
+		}
+	}
+	if ( runCal ==true &&  $('#a3').val().trim().length > 0 && $.isNumeric($('#a3').val()) == false ) {
+		runCal = false;
+		alert('武器 - 爆擊機率(%) -> 填寫錯誤.');
+	} else {
+		if ($('#a3').val().trim().length > 0) {
+			a3 = parseInt($('#a3').val());
+		}
+	}
+	if ( runCal ==true &&  $('#a4').val().trim().length > 0 && $.isNumeric($('#a4').val()) == false ) {
+		runCal = false;
+		alert('武器 - 爆擊傷害(%) -> 填寫錯誤.');
+	} else {
+		if ($('#a4').val().trim().length > 0) {
+			a4 = parseInt($('#a4').val());
+		}
+	}
+	
+	if ( runCal ==true && $('#b1').val().trim().length > 0 && $.isNumeric($('#b1').val()) == false ) {
+		runCal = false;
+		alert('防具 - 物理攻擊(%) -> 填寫錯誤.');
+	} else {
+		if ($('#b1').val().trim().length > 0) {
+			b1 = parseInt($('#b1').val());
+		}
+	}
+	if ( runCal ==true &&  $('#b2').val().trim().length > 0 && $.isNumeric($('#b2').val()) == false ) {
+		runCal = false;
+		alert('防具 - 物理攻擊(+) -> 填寫錯誤.');
+	} else {
+		if ($('#b2').val().trim().length > 0) {
+			b2 = parseInt($('#b2').val());
+		}
+	}
+	if ( runCal ==true &&  $('#b3').val().trim().length > 0 && $.isNumeric($('#b3').val()) == false ) {
+		runCal = false;
+		alert('防具 - 爆擊機率(%) -> 填寫錯誤.');
+	} else {
+		if ($('#b3').val().trim().length > 0) {
+			b3 = parseInt($('#b3').val());
+		}
+	}
+	if ( runCal ==true &&  $('#b4').val().trim().length > 0 && $.isNumeric($('#b4').val()) == false ) {
+		runCal = false;
+		alert('防具 - 爆擊傷害(%) -> 填寫錯誤.');
+	} else {
+		if ($('#b4').val().trim().length > 0) {
+			b4 = parseInt($('#b4').val());
+		}
+	}
+	
+	if ( runCal ==true && $('#c1').val().trim().length > 0 && $.isNumeric($('#c1').val()) == false ) {
+		runCal = false;
+		alert('飾品 - 物理攻擊(%) -> 填寫錯誤.');
+	} else {
+		if ($('#c1').val().trim().length > 0) {
+			c1 = parseInt($('#c1').val());
+		}
+	}
+	if ( runCal ==true &&  $('#c2').val().trim().length > 0 && $.isNumeric($('#c2').val()) == false ) {
+		runCal = false;
+		alert('飾品 - 物理攻擊(+) -> 填寫錯誤.');
+	} else {
+		if ($('#c2').val().trim().length > 0) {
+			c2 = parseInt($('#c2').val());
+		}
+	}
+	if ( runCal ==true &&  $('#c3').val().trim().length > 0 && $.isNumeric($('#c3').val()) == false ) {
+		runCal = false;
+		alert('飾品 - 爆擊機率(%) -> 填寫錯誤.');
+	} else {
+		if ($('#c3').val().trim().length > 0) {
+			c3 = parseInt($('#c3').val());
+		}
+	}
+	if ( runCal ==true &&  $('#c4').val().trim().length > 0 && $.isNumeric($('#c4').val()) == false ) {
+		runCal = false;
+		alert('飾品 - 爆擊傷害(%) -> 填寫錯誤.');
+	} else {
+		if ($('#c4').val().trim().length > 0) {
+			c4 = parseInt($('#c4').val());
+		}
+	}
+	if ( runCal ==true &&  $('#d1').val().trim().length > 0 && $.isNumeric($('#d1').val()) == false ) {
+		runCal = false;
+		alert('寵物基本物攻 -> 填寫錯誤.');
+	} else {
+		if ($('#d1').val().trim().length > 0) {
+			d1 = parseInt($('#d1').val());
+		}
+	}
+		
+	if ( runCal ==true ) {
+		var CalTA = 0;
+		var CalTB = 0;
+		var CalPA = a1 + b1 + c1;
+		if (CalPA >= 100) {
+			CalPA = CalPA / 100 * d1;
+		}
+		
+		var CalPB = a2 + b2 + c2;
+		CalTA = d1 + CalPA + CalPB;
+		var CalPP = a4 + b4 + c4;
+		if ( CalPP > 100 ) {
+			CalPP = CalPP / 100 + 1;
+			CalTB = CalTA * CalPP;
+		}
+		var CalTTA = parseInt(3800000 / CalTA);
+		if (CalTB > 0) {
+	    	var CalTTB = parseInt(3800000 / CalTB);
+	    } else {
+	    	var CalTTB = CalTTA;
+	    }
+		var e1 = parseInt($('#e1').val());
+		if ( parseInt($('#e1').val()) > 0 ) { 
+			CalTTB = parseInt( CalTTB / parseInt($('#e1').val()) );
+		}
+		var CalPC = a3 + b3 + c3;
+		var CalPCU = CalTA / CalTB;
+		
+		var showStr = "";
+		showStr = showStr + "攻擊數值：" + parseInt(CalTA) + "<br/>";
+		showStr = showStr + "爆擊數值：" + parseInt(CalTB) + "<br/>";
+		showStr = showStr + "預估報塔次數範圍：" + CalTTB + '~' + CalTTA + "(隨爆擊機率會有次數不同)";
+		$('#showMsg').html(showStr)
+		//alert(showStr);
+	}
+});
+-->
+</script>
