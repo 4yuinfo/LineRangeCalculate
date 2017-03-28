@@ -118,7 +118,6 @@
 		<tr>
 			<td colspan="5">
 				<div id="submitCal" class="ui primary button">計算</div>
-                                ＊.爆率若為0，爆傷請不要填寫，會影響計算。
 			</td>
 		</tr>
 	</tfoot>
@@ -267,36 +266,55 @@ $('#submitCal').click(function() {
 		var CalTA = 0;
 		var CalTB = 0;
 		var CalPA = a1 + b1 + c1;
+		
 		if (CalPA >= 100) {
 			CalPA = CalPA / 100 * d1;
 		}
 		
 		var CalPB = a2 + b2 + c2;
 		CalTA = d1 + CalPA + CalPB;
-		var CalPP = a4 + b4 + c4;
-		if ( CalPP > 100 ) {
-			CalPP = CalPP / 100 + 1;
-			CalTB = CalTA * CalPP;
+		
+		var CalPC = a3 + b3 + c3;
+		var CalPD = a4 + b4 + c4;
+		if ( CalPC == 0 ) {
+			CalPD = 0
 		}
+		
+		if ( CalPD > 100 ) {
+			CalPD = CalPD / 100 + 1;
+			CalTB = CalTA * CalPD;
+		}
+		
 		var CalTTA = parseInt(3800000 / CalTA);
 		if (CalTB > 0) {
 	    	var CalTTB = parseInt(3800000 / CalTB);
 	    } else {
 	    	var CalTTB = CalTTA;
 	    }
+		var CalUA = CalTTB;
+				
+        var CalPCC = 1 - ( CalTA / CalTB );
+		
+		if ( CalPC < 1 ) {
+            CalPCU = CalTTA;
+        } else if ( CalPC >= 58 && CalPC < 78 ) {
+            CalPCU = CalTTA * CalPCC;
+        } else if ( CalPC >= 78 ) {
+            CalPCU = CalTTA * CalPCC * CalPCC;
+        }
+		
 		var e1 = parseInt($('#e1').val());
 		if ( parseInt($('#e1').val()) > 0 ) { 
 			CalTTB = parseInt( CalTTB / parseInt($('#e1').val()) );
+			CalPCU = parseInt( CalPCU / parseInt($('#e1').val()) );
 		}
-		var CalPC = a3 + b3 + c3;
-		var CalPCU = CalTA / CalTB;
-		
+				
 		var showStr = "";
 		showStr = showStr + "攻擊數值：" + parseInt(CalTA) + "<br/>";
 		showStr = showStr + "爆擊數值：" + parseInt(CalTB) + "<br/>";
-		showStr = showStr + "預估報塔次數範圍：" + CalTTB + '~' + CalTTA + "(隨爆擊機率會有次數不同)";
+		showStr = showStr + "預估報塔次數範圍：" + CalTTB + '~' + CalTTA + "(隨爆擊機率會有次數不同)<br/>";
+		showStr = showStr + "通常成功機會：" + parseInt(CalPCU);
 		$('#showMsg').html(showStr)
-		//alert(showStr);
 	}
 });
 -->
