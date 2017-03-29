@@ -266,6 +266,7 @@ $('#submitCal').click(function() {
 		var CalTA = 0;
 		var CalTB = 0;
 		var CalPA = a1 + b1 + c1;
+		var CalPCU = 0;
 		
 		if (CalPA >= 100) {
 			CalPA = CalPA / 100 * d1;
@@ -295,7 +296,7 @@ $('#submitCal').click(function() {
 				
         var CalPCC = 1 - ( CalTA / CalTB );
 		
-		if ( CalPC < 1 ) {
+		if ( CalPC < 58 ) {
             CalPCU = CalTTA;
         } else if ( CalPC >= 58 && CalPC < 78 ) {
             CalPCU = CalTTA * CalPCC;
